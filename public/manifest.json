@@ -1,0 +1,6 @@
+{
+  "name": "geeros",
+  "short_name": "geeros",
+  "start_url": "/",
+  "display": "standalone"
+}

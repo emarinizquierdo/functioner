@@ -1,0 +1,111 @@
+<dom-module id="places-list">
+    <template>
+        <style>
+            iron-list {
+                margin-top: 50px;
+                padding-bottom: 16px;
+            }
+
+            .loadingIndicator {
+                font-size: 16px;
+                text-align: center;
+                height: 60px;
+            }
+
+            .loadingIndicator paper-spinner {
+                margin-right: 20px;
+                vertical-align: middle;
+            }
+
+            place-item {
+                position: relative;
+            }
+        </style>
+        <!-- Location resolver -->
+        <iron-ajax id="getPlaces" url="/api/places" params={{parameters}} handle-as="json" last-response="{{data}}" debounce-duration="300" loading="{{loadingPhotos}}" on-response="_onResponse"></iron-ajax>
+        <iron-list items="[[items]]" sort="_sortDistance" filter="_filter" scroll-target="threshold">
+            <template>
+                <place-item item="[[item]]"></place-item>
+            </template>
+        </iron-list>
+        <div class="loadingIndicator" hidden$="{{!loadingPhotos}}">
+            <paper-spinner active$="{{loadingPhotos}}"></paper-spinner>
+        </div>
+        <!-- this element loads more photos when the user scrolls down and reached the lower threshold -->
+        <iron-scroll-threshold id="scrollThreshold" scroll-target="document" lower-threshold="500" on-lower-threshold="_loadMorePhotos"></iron-scroll-threshold>
+        <geo-location latitude="{{latitude}}" longitude="{{longitude}}"></geo-location>
+    </template>
+    <script>
+        class PlacesList extends Polymer.Element {
+
+            static get is() {
+                return 'places-list';
+            }
+
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String,
+                        value: 'places-list'
+                    },
+                    parameters: {
+                        type: Object,
+                    },
+                    items: {
+                        type: Array,
+                        value: []
+                    }
+                };
+            }
+
+            static get observers() {
+                return ['_prepareParams(latitude, longitude)']
+            }
+
+            _prepareParams(latitude, longitude) {
+
+                if (latitude != null && longitude != null) {
+                    this.parameters = {
+                        "latlong": latitude + "," + longitude,
+                        "radius": 2000,
+                        "types": "food"
+                    }
+
+                    if (this.data && this.data.next_page_token) {
+                        this.parameters.pagetoken = this.data.next_page_token;
+                    }
+
+                    if (this.$.getPlaces.lastRequest) {
+                        this.$.getPlaces.lastRequest.abort();
+                    }
+                    this.$.getPlaces.generateRequest();
+                }
+
+            }
+
+            _sortDistance(a, b) {
+                return a.distance - b.distance;
+            }
+
+            _filter(item) {
+                return (item.rating != null);
+            }
+
+            _loadMorePhotos() {
+
+                
+                this.$.scrollThreshold.clearTriggers();
+                if(this.data && this.data.next_page_token){
+                this._prepareParams(this.latitude, this.longitude);
+                }
+            }
+
+            _onResponse() {
+                this.items = this.items.concat(this.data.results);
+            }
+
+        }
+
+        window.customElements.define(PlacesList.is, PlacesList);
+    </script>
+</dom-module>

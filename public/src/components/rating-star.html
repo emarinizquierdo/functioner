@@ -1,0 +1,80 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="rating-star">
+    <template>
+        <style>
+            .cards-rating-stars {
+                vertical-align: middle;
+                display: inline-block;
+                height: 16px;
+                margin-right: 1px;
+                font-size: 0;
+                padding: 0;
+            }
+
+            .cards-rating-star {
+                background: url(//maps.gstatic.com/tactile/omnibox/star-20130618.png) no-repeat;
+                background-position: 0 1px;
+                background-size: 37px 13px;
+                display: inline-block;
+                height: 13px;
+                width: 13px;
+            }
+
+            .cards-rating-star-half {
+                background-position: -13px 1px;
+            }
+
+            .cards-rating-star-empty {
+                background-position: -25px 1px;
+            }
+
+            .cards-rating-score {
+                vertical-align: middle;
+                color: #e7711b;
+                margin-right: 1px;
+            }
+            .section-result-num-ratings {
+                color: #bbb;
+                vertical-align: middle;
+            }
+        </style>
+        <span>
+            <span class="cards-rating-score">{{rating}}</span>
+            <ol class="cards-rating-stars">
+                <li class="cards-rating-star"></li>
+                <li class="cards-rating-star"></li>
+                <li class="cards-rating-star"></li>
+                <li class="cards-rating-star"></li>
+                <li class="cards-rating-star cards-rating-star-half"></li>
+                <li class="cards-rating-star cards-rating-star-empty"></li>
+            </ol>
+            <span class="section-result-num-ratings">{{reviews}}</span>
+        </span>
+    </template>
+    <script>
+        class RatingStar extends Polymer.Element {
+
+            static get is() {
+                return 'rating-star';
+            }
+
+            static get properties() {
+                return {
+                    rating: {
+                        type: Number
+                    },
+                    reviews: {
+                        type: Number
+                    }
+                };
+            }
+
+            _getPercentage(rating) {
+                return "width: " + (rating * 100) / 5 + "%";
+            }
+
+        }
+
+        window.customElements.define(RatingStar.is, RatingStar);
+    </script>
+</dom-module>

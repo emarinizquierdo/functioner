@@ -1,0 +1,99 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="place-item">
+    <template>
+        <style>
+            .item {
+                @apply(--layout-horizontal); padding: 20px;
+                border-radius: 8px;
+                background-color: white;
+                border: 1px solid #ddd;
+                max-width: 800px;
+                margin: 16px auto 0 auto;
+            }
+
+            .item:focus {
+                outline: 0;
+                border-color: #333;
+            }
+
+            .cover {
+                width: 150px;
+                height: 150px;
+            }
+
+            @media (max-width: 600px) {
+                .cover {
+                    width: 75px;
+                    height: 75px;
+                }
+            }
+
+            .pad {
+                padding: 0 16px;
+                font-size: 13px;
+                line-height: 16px;
+                @apply(--layout-flex); @apply(--layout-vertical); }
+
+            .primary {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .secondary {
+                font-size: 14px;
+            }
+
+            .avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    background-color: #DDD;
+}
+        </style>
+        <div>
+            <div class="item" tabindex$="[[tabIndex]]">
+                <iron-image sizing="cover" class="cover" src="https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyD4Ob2COwMaoGO-3JhGPWYUcNz2ttqJrcY&photo_reference=[[item.photos.0.photo_reference]]&maxheight=400&maxwidth=400"></iron-image>
+                <div class="pad">
+                    <div class="primary">[[item.name]] [[index]]</div>
+                    <rating-star rating="[[item.rating]]"></rating-star>
+                    <div class="secondary">{{_getDistance(item.distance)}}m</div>
+                    <div class="secondary">[[item.vicinity]]</div>
+                    <button on-click="_toggle">Mostrar [[item.details.reviews.length]] comentarios</button>
+                    <iron-collapse id="collapse" style="width:100%;">
+                        <template is="dom-repeat" items="{{item.details.reviews}}" as="review">
+                            <p>
+                            <div>
+                                <iron-image class="avatar" sizing="contain" src="[[review.profile_photo_url]]"></iron-image>
+                            </div>
+                            <span>{{review.text}}
+                            </span>
+</p></template></iron-collapse></div></div></div></template><script>
+    class PlaceItem extends Polymer.Element {
+
+        static get is() {
+            return 'place-item';
+        }
+
+        static get properties() {
+            return {
+                item: {
+                    type: Object,
+                    value: {}
+                }
+            };
+        }
+
+        _getDistance(distance) {
+            return parseInt(distance * 1000);
+        }
+
+        _toggle() {
+            this.$.collapse.toggle();
+        }
+
+    }
+
+    window.customElements.define(PlaceItem.is, PlaceItem);
+</script>
+</dom-module>
