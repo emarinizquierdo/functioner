@@ -1,7 +1,21 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+<div id="app">
+  <nav>
+    <div class="nav-wrapper blue-grey ">
+      <a href="#" class="brand-logo">Logo</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+          <router-link to="view1">view1</router-link>
+        </li>
+        <li>
+          <router-link to="view2">view2</router-link>
+        </li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+      </ul>
+    </div>
+  </nav>
+  <router-view/>
+</div>
 </template>
 
 <script>
@@ -11,12 +25,5 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+#app {}
 </style>
