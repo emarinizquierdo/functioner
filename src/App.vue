@@ -13,14 +13,20 @@
       </ul>
     </div>
   </nav>
+  <progress-bar></progress-bar>
   <router-view/>
 </div>
 </template>
 
 <script>
 
+import ProgressBar from '@/components/ProgressBar'
+
 let app = {
-  name: 'app'
+  name: 'app',
+  components: {
+    progressBar : ProgressBar
+  }
 }
 
 export default app;

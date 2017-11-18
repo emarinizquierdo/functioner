@@ -9,26 +9,29 @@ app.get('/api/places', (req, res) => {
   if (req.query.latlong) {
     location = req.query.latlong.split(',');
 
-    let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyA_ycU-OVy7aVlROkAY-sMDNOno43me_UY";
+    let url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=AIzaSyA_ycU-OVy7aVlROkAY-sMDNOno43me_UY';
 
     if (req.query.latlong) {
-      url = url + "&location=" + req.query.latlong;
+      url = url + '&location=' + req.query.latlong;
     }
 
-    url = url + "&rankby=distance";
+    url = url + '&rankby=distance';
 
 
     if (req.query.types) {
-      url = url + "&types=" + req.query.types;
+      url = url + '&types=' + req.query.types;
     }
 
     if (req.query.pagetoken) {
-      url = url + "&pagetoken=" + req.query.pagetoken;
+      url = url + '&pagetoken=' + req.query.pagetoken;
     }
 
-    //response.writeHead(200, {"Content-Type": "application/json"});
-    request(url, function(error, response, body) {
+    // response.writeHead(200, {"Content-Type": "application/json"});
+    request(url, function (error, response, body) {
 
+      if (error) {
+
+      }
 
       let data = JSON.parse(body);
       let countDown = data.results.length;
