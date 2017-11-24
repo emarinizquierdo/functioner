@@ -1,12 +1,10 @@
 <template>
-  <div  class="progress blue lighten-2">
-    <div class="indeterminate blue"></div>
-    {{msg}}
-  </div>
+<div v-if="show" class="progress blue lighten-2">
+  <div class="indeterminate blue"></div>
+</div>
 </template>
 
 <script>
-
 function ProgressBar() {
 
   this.name = 'progress-bar';
@@ -14,31 +12,31 @@ function ProgressBar() {
   this.data = _data;
   this.created = _created;
 
-  this.methods = {
-    showProgressBar : _showProgressBar
-  }
-
-  function _data () {
+  function _data() {
 
     return {
-      show : false,
-      msg : ''
+      show: false
     }
 
   }
 
-  var publicMethods = {
-    showProgressBar : this.methods.showProgressBar
-  }
-
-  function _created () {
-    this.$store.state.progress = publicMethods;
-  }
-
-  function _showProgressBar(){
-    debugger;
+  function showProgressBar() {
     this.show = true;
     this.msg = "heyyy";
+  }
+
+  function hideProgressBar() {
+    this.show = false;
+    this.msg = "heyyy";
+  }
+
+  function _created() {
+
+    this.$store.state.progress = {
+      showProgressBar: showProgressBar.bind(this),
+      hideProgressBar: hideProgressBar.bind(this)
+    }
+
   }
 
 };
@@ -48,8 +46,8 @@ export default new ProgressBar();
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .progress {
-    padding: 0;
-    margin: 0;
-  }
+.progress {
+  padding: 0;
+  margin: 0;
+}
 </style>

@@ -54,6 +54,8 @@ function View2() {
 
   function _makeRequest() {
 
+    this.$store.state.progress.showProgressBar();
+
     request
       .get('/api/places?latlong=40.4940472,-3.6725582&radius=%202000&types=food')
       .end(function(err, res) {
@@ -64,8 +66,10 @@ function View2() {
         }
 
         this.places = res.body.results;
+        this.$store.state.progress.hideProgressBar();
 
       }.bind(this));
+
 
   }
 

@@ -14,6 +14,7 @@
     </div>
   </nav>
   <progress-bar></progress-bar>
+
   <router-view/>
 </div>
 </template>
@@ -22,10 +23,16 @@
 
 import ProgressBar from '@/components/ProgressBar'
 
-let app = {
+var app = {
   name: 'app',
   components: {
     progressBar : ProgressBar
+  },
+  methods:{
+    showProgressBar : function(){
+      debugger;
+      this.$store.state.progress.hideProgressBar();
+    }
   }
 }
 
