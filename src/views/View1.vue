@@ -1,30 +1,16 @@
 <template>
 <div class="view1">
-  <ul id="example-1">
-    <li v-for="item in places">
-
-      <div class="row">
-        <div class="col s12 m6">
-          <div class="card blue-grey darken-1">
-            <div class="card-content white-text">
-              <span class="card-title">{{ item.name }}</span>
-              <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
-            </div>
-            <div class="card-action">
-              <a href="#">This is a link</a>
-              <a href="#">This is a link</a>
-            </div>
-          </div>
+        <div class="col s12 m2 l2">
+          <place-card v-for="item in places" v-bind:place="item"></place-card>
         </div>
-      </div>
-    </li>
-  </ul>
+
 </div>
 </template>
 
 <script>
-const request = require('superagent');
 
+import PlaceCard from '@/components/PlaceCard';
+const request = require('superagent');
 
 function View2() {
 
@@ -38,6 +24,10 @@ function View2() {
 
   this.data = _data;
   this.created = _created;
+
+  this.components = {
+    placeCard : PlaceCard
+  }
 
   /* Reactive props */
   function _data() {

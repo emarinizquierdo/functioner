@@ -13,6 +13,7 @@
       </ul>
     </div>
   </nav>
+
   <progress-bar></progress-bar>
 
   <router-view/>
@@ -30,7 +31,6 @@ var app = {
   },
   methods:{
     showProgressBar : function(){
-      debugger;
       this.$store.state.progress.hideProgressBar();
     }
   }

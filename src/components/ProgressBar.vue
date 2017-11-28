@@ -27,7 +27,6 @@ function ProgressBar() {
 
   function hideProgressBar() {
     this.show = false;
-    this.msg = "heyyy";
   }
 
   function _created() {
