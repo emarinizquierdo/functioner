@@ -2,7 +2,7 @@
 <div class="card">
   <div class="card-image card-image waves-effect waves-block waves-light">
     <img class="responsive-img" v-bind:src="getImage">
-    <span class="card-title">{{place.name}}</span>
+    <span class="card-title">{{place.name}} {{geolocation.latitude}}</span>
   </div>
   <div class="card-content">
       <rating-star num-stars="5" v-bind:rating="place.rating"></rating-star>
@@ -37,13 +37,15 @@ function PlaceCard() {
 
   function _data() {
 
-    return {}
+    return {
+      geoposition : null
+    }
 
   }
 
   function _created() {
 
-
+this.geolocation = this.$store.state.geolocation;
 
   }
 

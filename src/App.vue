@@ -15,6 +15,7 @@
   </nav>
 
   <progress-bar></progress-bar>
+  <geo-location></geo-location>
 
   <router-view/>
 </div>
@@ -22,12 +23,14 @@
 
 <script>
 
-import ProgressBar from '@/components/ProgressBar'
+import ProgressBar from '@/components/ProgressBar';
+import GeoLocation from '@/components/GeoLocation';
 
 var app = {
   name: 'app',
   components: {
-    progressBar : ProgressBar
+    progressBar : ProgressBar,
+    geoLocation : GeoLocation
   },
   methods:{
     showProgressBar : function(){
